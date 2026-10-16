@@ -1,0 +1,8 @@
+/filtergram.user.js
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=300
+  Access-Control-Allow-Origin: *
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer

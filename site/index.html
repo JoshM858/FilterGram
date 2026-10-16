@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FilterGram — Instagram without the Reels</title>
+<meta name="description" content="A free Safari userscript that removes Reels, Explore and suggested posts from Instagram on iPhone. Runs on your device. Your login never touches our site.">
+<meta name="theme-color" content="#0f766e">
+<style>
+  :root {
+    --bg: #fafaf8; --fg: #16181d; --muted: #5b616b; --card: #ffffff; --line: #e4e4df;
+    --accent: #0f766e; --accent-fg: #ffffff; --code: #eef0ed;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1113; --fg: #eceef1; --muted: #9aa1ab; --card: #181b1f; --line: #2a2e34;
+            --accent: #2dd4bf; --accent-fg: #06201c; --code: #20242a; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--bg); color: var(--fg); line-height: 1.55;
+         font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 680px; margin: 0 auto; padding: 0 16px calc(48px + env(safe-area-inset-bottom)); }
+  header { padding: 56px 0 24px; }
+  .brand { font-weight: 700; letter-spacing: -.01em; color: var(--accent); }
+  h1 { font-size: clamp(30px, 8vw, 44px); line-height: 1.1; letter-spacing: -.02em; margin: 10px 0 14px; }
+  h2 { font-size: 22px; letter-spacing: -.01em; margin: 44px 0 12px; }
+  p { margin: 0 0 14px; }
+  .lead { font-size: 19px; color: var(--muted); }
+  .btn { display: inline-block; padding: 14px 22px; border-radius: 12px; background: var(--accent);
+         color: var(--accent-fg); font-weight: 650; text-decoration: none; }
+  .btn:active { opacity: .85; }
+  .btn.ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  ul.list { padding-left: 20px; margin: 0 0 14px; }
+  ul.list li { margin-bottom: 6px; }
+  ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: s; }
+  ol.steps li { counter-increment: s; position: relative; background: var(--card); border: 1px solid var(--line);
+                border-radius: 14px; padding: 14px 16px 14px 56px; margin-bottom: 10px; }
+  ol.steps li::before { content: counter(s); position: absolute; left: 16px; top: 14px; width: 28px; height: 28px;
+                        border-radius: 50%; background: var(--accent); color: var(--accent-fg);
+                        display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+  ol.steps strong { display: block; margin-bottom: 2px; }
+  ol.steps span { color: var(--muted); font-size: 15.5px; }
+  code { background: var(--code); padding: 2px 6px; border-radius: 6px; font-size: .9em; overflow-wrap: anywhere; white-space: nowrap; }
+  ol.steps code, .note code { white-space: normal; }
+  table { width: 100%; border-collapse: collapse; font-size: 15.5px; }
+  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; }
+  .note { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+          border-radius: 10px; padding: 12px 14px; font-size: 15.5px; color: var(--muted); }
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; margin-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 600; }
+  details p { margin: 10px 0 0; color: var(--muted); font-size: 15.5px; }
+  footer { margin-top: 48px; color: var(--muted); font-size: 14px; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="brand">FilterGram</div>
+    <h1>Instagram, minus the Reels.</h1>
+    <p class="lead">A free script for Safari on iPhone. It hides Reels, Explore and suggested posts, and keeps your feed, DMs and the people you follow.</p>
+    <div class="cta">
+      <a class="btn" href="#install">Install on iPhone</a>
+      <a class="btn ghost" href="#how">How it works</a>
+    </div>
+  </header>
+
+  <h2>What it does</h2>
+  <ul class="list">
+    <li><strong>Removes the Reels tab</strong>, Reels in your home feed, and the Reels tab on profiles.</li>
+    <li><strong>Blocks the endless Reels feed.</strong> Visiting it sends you back home.</li>
+    <li><strong>Lets a reel a friend sends you play</strong>, but locks it, so you can't swipe to the next one.</li>
+    <li><strong>Hides Explore</strong> and suggested posts, so your feed is just people you follow.</li>
+    <li><strong>Every rule has a switch.</strong> Tap the small <b>FG</b> button on Instagram to change them.</li>
+  </ul>
+
+  <h2 id="install">Install on iPhone</h2>
+  <p>It takes about three minutes. You need Safari (not Chrome) and a free helper app called <em>Userscripts</em>.</p>
+  <ol class="steps">
+    <li><strong>Get the Userscripts app</strong>
+      <span>Search for “Userscripts” on the App Store. It's free and open source.</span></li>
+    <li><strong>Turn it on in Safari</strong>
+      <span>Open Settings, then Safari, then Extensions, and switch on <em>Userscripts</em>. Set it to <em>Allow</em> for <code>instagram.com</code>. On newer iOS the path is Settings, Apps, Safari, Extensions.</span></li>
+    <li><strong>Pick its folder</strong>
+      <span>Open the Userscripts app once and choose a folder in Files where it keeps your scripts.</span></li>
+    <li><strong>Add FilterGram</strong>
+      <span>In Safari, open <a href="filtergram.user.js"><code>filtergram.user.js</code></a>. Tap the <em>aA</em> menu, then <em>Userscripts</em>, then <em>Install</em>. If you get no prompt, save the file into the folder from step 3.</span></li>
+    <li><strong>Open Instagram in Safari and log in</strong>
+      <span>Go to <code>instagram.com</code> and log in as normal. Reels and Explore should be gone.</span></li>
+  </ol>
+
+  <p style="margin-top:18px"><a class="btn" href="filtergram.user.js">Install the script</a></p>
+
+  <div class="note" style="margin-top:20px">
+    <strong>Open it from Safari, not from a Home Screen icon.</strong> To our knowledge, iOS runs Home Screen web apps in their own window, where Safari extensions don't load, so the filter wouldn't apply. Save <code>instagram.com</code> as a Safari bookmark or Start Page favourite instead.
+  </div>
+
+  <h2 id="how">How it works</h2>
+  <p>FilterGram is a small script that runs <em>inside your own Safari tab</em>, on the real <code>instagram.com</code>. You log in to Instagram directly, as you always do. It changes only what is shown on your screen.</p>
+  <table>
+    <tr><th>Question</th><th>Answer</th></tr>
+    <tr><td>Does my login go through FilterGram?</td><td>No. This site never sees your password, 2FA code or cookies.</td></tr>
+    <tr><td>Is anything collected?</td><td>No. There are no accounts, analytics or servers. Settings live in your browser.</td></tr>
+    <tr><td>Does it affect the Instagram app?</td><td>No. It only works in Safari on the website.</td></tr>
+    <tr><td>Why a script and not a website you log in to?</td><td>A site that sits between you and Instagram would have to handle your credentials. That is unsafe, Instagram blocks it, and it breaks their terms.</td></tr>
+  </table>
+
+  <h2>Good to know</h2>
+  <details>
+    <summary>Instagram changes its pages often</summary>
+    <p>FilterGram looks for stable things such as link addresses, not Instagram's scrambled class names, but Instagram can still change things. If Reels sneak back in, update the script: re-open the install link above.</p>
+  </details>
+  <details>
+    <summary>Notifications and posting</summary>
+    <p>The website gets fewer features than the app. Push notifications are limited, and some posting options (like long videos) may need the app. Reading, DMs and photos work fine.</p>
+  </details>
+  <details>
+    <summary>Suggested-post hiding is English only</summary>
+    <p>Hiding suggested posts matches the “Suggested for you” label, so it works when Instagram is set to English. The Reels and Explore rules don't depend on language.</p>
+  </details>
+  <details>
+    <summary>Not affiliated with Instagram or Meta</summary>
+    <p>FilterGram is an independent project. “Instagram” belongs to Meta Platforms, Inc.</p>
+  </details>
+
+  <footer>FilterGram · open source · runs only on your device</footer>
+</main>
+</body>
+</html>
